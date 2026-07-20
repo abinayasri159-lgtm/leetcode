@@ -1,0 +1,25 @@
+class Foo {
+
+    private volatile int order = 1;
+
+    public Foo() {
+    }
+
+    public void first(Runnable printFirst) {
+        printFirst.run();
+        order = 2;
+    }
+
+    public void second(Runnable printSecond) {
+        while (order != 2) {
+        }
+        printSecond.run();
+        order = 3;
+    }
+
+    public void third(Runnable printThird) {
+        while (order != 3) {
+        }
+        printThird.run();
+    }
+}
