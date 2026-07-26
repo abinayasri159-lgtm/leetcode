@@ -1,0 +1,30 @@
+import java.util.Scanner;
+
+public class BillSplitter {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("===== BILL SPLITTER =====");
+
+        System.out.print("Enter Total Bill Amount: ");
+        double totalBill = sc.nextDouble();
+
+        System.out.print("Enter Number of People: ");
+        int people = sc.nextInt();
+
+        if (people <= 0) {
+            System.out.println("Number of people must be greater than 0.");
+        } else {
+            double share = totalBill / people;
+
+            System.out.println("\n----- BILL DETAILS -----");
+            System.out.println("Total Bill : " + totalBill);
+            System.out.println("People     : " + people);
+            System.out.printf("Each Person Pays : %.2f\n", share);
+        }
+
+        sc.close();
+    }
+}
