@@ -1,0 +1,251 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Employee {
+
+    int id;
+    String name;
+    String department;
+    String status;
+    double salary;
+
+    Employee(int id, String name, String department,
+             double salary, String status) {
+
+        this.id = id;
+        this.name = name;
+        this.department = department;
+        this.salary = salary;
+        this.status = status;
+    }
+
+    void display() {
+
+        System.out.println("----------------------------");
+        System.out.println("Employee ID : " + id);
+        System.out.println("Name        : " + name);
+        System.out.println("Department  : " + department);
+        System.out.println("Salary      : $" + salary);
+        System.out.println("Status      : " + status);
+
+    }
+}
+
+public class EmployeeAttritionSystem {
+
+    static Scanner sc = new Scanner(System.in);
+    static ArrayList<Employee> employees = new ArrayList<>();
+
+    public static void main(String[] args) {
+
+        int choice;
+
+        do {
+
+            System.out.println("\n========== EMPLOYEE ATTRITION SYSTEM ==========");
+            System.out.println("1. Add Employee");
+            System.out.println("2. View Employees");
+            System.out.println("3. Search Employee");
+            System.out.println("4. Attrition Analysis");
+            System.out.println("5. Cost Impact");
+            System.out.println("6. Company Report");
+            System.out.println("7. Exit");
+
+            System.out.print("Enter Choice : ");
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch(choice){
+
+                case 1:
+                    addEmployee();
+                    break;
+
+                case 2:
+                    viewEmployees();
+                    break;
+
+                case 3:
+                    searchEmployee();
+                    break;
+
+                case 4:
+                    attritionAnalysis();
+                    break;
+
+                case 5:
+                    costImpact();
+                    break;
+
+                case 6:
+                    companyReport();
+                    break;
+
+                case 7:
+                    System.out.println("Thank You!");
+                    break;
+
+                default:
+                    System.out.println("Invalid Choice");
+            }
+
+        } while(choice != 7);
+
+    }
+
+    static void addEmployee() {
+
+        System.out.print("Employee ID : ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Employee Name : ");
+        String name = sc.nextLine();
+
+        System.out.print("Department : ");
+        String dept = sc.nextLine();
+
+        System.out.print("Salary : ");
+        double salary = sc.nextDouble();
+        sc.nextLine();
+
+        System.out.print("Status (New Joiner/Working/Resigned): ");
+        String status = sc.nextLine();
+
+        employees.add(new Employee(id, name, dept, salary, status));
+
+        System.out.println("Employee Added Successfully!");
+
+    }
+
+    static void viewEmployees() {
+
+        if(employees.isEmpty()){
+
+            System.out.println("No Employee Records.");
+            return;
+
+        }
+
+        for(Employee e : employees){
+
+            e.display();
+
+        }
+
+    }
+        // Search Employee
+    static void searchEmployee() {
+
+        if (employees.isEmpty()) {
+            System.out.println("No Employee Records.");
+            return;
+        }
+
+        System.out.print("Enter Employee ID : ");
+        int id = sc.nextInt();
+
+        boolean found = false;
+
+        for (Employee e : employees) {
+
+            if (e.id == id) {
+                e.display();
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Employee Not Found.");
+        }
+    }
+
+    // Attrition Analysis
+    static void attritionAnalysis() {
+
+        if (employees.isEmpty()) {
+            System.out.println("No Employee Records.");
+            return;
+        }
+
+        System.out.print("Enter Employee ID : ");
+        int id = sc.nextInt();
+
+        for (Employee e : employees) {
+
+            if (e.id == id) {
+
+                System.out.println("\nEmployee Name : " + e.name);
+
+                if (e.status.equalsIgnoreCase("Resigned")) {
+                    System.out.println("Attrition Risk : HIGH");
+                }
+                else if (e.status.equalsIgnoreCase("Working")) {
+                    System.out.println("Attrition Risk : LOW");
+                }
+                else {
+                    System.out.println("Attrition Risk : MEDIUM");
+                }
+
+                return;
+            }
+        }
+
+        System.out.println("Employee Not Found.");
+    }
+
+    // Cost Impact
+    static void costImpact() {
+
+        if (employees.isEmpty()) {
+            System.out.println("No Employee Records.");
+            return;
+        }
+
+        System.out.print("Enter Employee ID : ");
+        int id = sc.nextInt();
+
+        for (Employee e : employees) {
+
+            if (e.id == id) {
+
+                double cost = e.salary * 3;
+
+                System.out.println("\nEmployee Name : " + e.name);
+                System.out.println("Monthly Salary : $" + e.salary);
+                System.out.println("Estimated Replacement Cost : $" + cost);
+
+                return;
+            }
+        }
+
+        System.out.println("Employee Not Found.");
+    }
+
+    // Company Report
+    static void companyReport() {
+
+        int newJoiners = 0;
+        int working = 0;
+        int resigned = 0;
+
+        for (Employee e : employees) {
+
+            if (e.status.equalsIgnoreCase("New Joiner"))
+                newJoiners++;
+
+            else if (e.status.equalsIgnoreCase("Working"))
+                working++;
+
+            else if (e.status.equalsIgnoreCase("Resigned"))
+                resigned++;
+        }
+
+        System.out.println("\n========== COMPANY REPORT ==========");
+        System.out.println("Total Employees : " + employees.size());
+        System.out.println("New Joiners     : " + newJoiners);
+        System.out.println("Working         : " + working);
+        System.out.println("Resigned        : " + resigned);
+    }
+}
